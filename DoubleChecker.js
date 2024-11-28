@@ -296,7 +296,7 @@
         element.innerHTML = `
             <div id="draggable" style="min-width: 13%; position: fixed; top: 5px; right: 5px; z-index: 9999; width: auto; height: 90%; display: flex; flex-direction: column; padding: 13px; border: 1px solid #424242; background-color: #121212; color: #e0e0e0; border-radius: 10px; background-size: auto 100%;">
                 <div id="handle" style="cursor: move; background-color: #424242; height: 10px; border-radius: 5px;"></div>
-                <div style="font-weight: bolder;"><br>TÍTULO AQUI</div>
+                <div style="font-weight: bolder;"><br>MINUTO DO FUTURO</div>
                 <div id="checkerLogo" style="height: 25%;background-position: center;background-size: 90%;background-repeat: no-repeat;"></div>
                 <div><a href="https://linktr.ee/00dablaze14x" style="font-weight: bolder;color: white;">@00dablaze14x</a></div>
                 <select id="predictsBox" multiple style="flex: 1; overflow-y: auto; background-color: #131212e0; color: #e0e0e0; border: 1px solid #424242; border-radius: 5px;"></select>
