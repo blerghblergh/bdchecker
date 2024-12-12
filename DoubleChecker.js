@@ -40,37 +40,46 @@
 
 function fetchRouletteHistory() {
     return new Promise((resolve, reject) => {
-        const now = new Date();
-        const endDate = now.toISOString();
-        const startDate = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(); // Last 24 hours
+        // Calculate the endDate as "now" in UTC
+        const endDate = new Date();
+        // Calculate startDate as 30 days before endDate
+        const startDate = new Date(endDate.getTime() - (30 * 24 * 60 * 60 * 1000));
 
-        const url = `https://blaze1.space/api/singleplayer-originals/originals/roulette_games/recent/history/1?startDate=${startDate}&endDate=${endDate}&page=1`;
+        // Convert to ISO strings in UTC format
+        const startDateParam = startDate.toISOString();
+        const endDateParam = endDate.toISOString();
+
+        // Construct URL with date parameters and page=1
+        const url = `https://blaze1.space/api/singleplayer-originals/originals/roulette_games/recent/history/1?startDate=${encodeURIComponent(startDateParam)}&endDate=${encodeURIComponent(endDateParam)}&page=1`;
 
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
+
         xhr.onload = function () {
             if (xhr.status === 200) {
                 try {
                     const data = JSON.parse(xhr.responseText);
                     if (!data || !data.records) {
-                        reject('Error fetching data: Response missing "records"');
-                        return;
+                        return reject('Error fetching data: Invalid response format');
                     }
                     const processedRecords = data.records.map(record => processRecord(record));
                     resolve(processedRecords);
                 } catch (err) {
-                    reject('Error parsing response as JSON:' + err);
+                    reject('Error parsing JSON response: ' + err.message);
                 }
             } else {
                 reject('Error fetching data: ' + xhr.statusText);
             }
         };
+
         xhr.onerror = function (err) {
-            reject('Error making request:' + err);
+            reject('Error making request: ' + err);
         };
+
         xhr.send();
     });
 }
+
 
     function getNewRolls(fetchedRolls) {
         const existingIds = new Set(pastRolls.map(roll => roll.id));
