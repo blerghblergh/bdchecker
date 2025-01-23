@@ -151,6 +151,21 @@ function fetchRouletteHistory() {
                 minA = firstA;
                 minB = currentRoll;
                 redRed = true;
+            } else if (
+                (firstA.cor == "⚫" && currentRoll.cor == "⚫" &&
+                    firstA.hora == currentRoll.hora && firstA.minuto != currentRoll.minuto &&
+                    firstA.roll != currentRoll.roll)
+            ) {
+                if (currentRoll.roll > firstA.roll) {
+                    maxRoll = currentRoll.roll;
+                    minRoll = firstA.roll;
+                } else {
+                    maxRoll = firstA.roll;
+                    minRoll = currentRoll.roll;
+                }
+                minA = firstA;
+                minB = currentRoll;
+                blackBlack = true;
             } else {
                 firstA = currentRoll;
                 redRed = false;
