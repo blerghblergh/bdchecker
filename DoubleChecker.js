@@ -50,7 +50,7 @@ function fetchRouletteHistory() {
         const endDateParam = endDate.toISOString();
 
         // Construct URL with date parameters and page=1
-        const url = `https://blaze1.space/api/singleplayer-originals/originals/roulette_games/recent/history/1?startDate=${encodeURIComponent(startDateParam)}&endDate=${encodeURIComponent(endDateParam)}&page=1`;
+        const url = `https://blaze.bet.br/api/singleplayer-originals/originals/roulette_games/recent/history/1?startDate=${encodeURIComponent(startDateParam)}&endDate=${encodeURIComponent(endDateParam)}&page=1`;
 
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
