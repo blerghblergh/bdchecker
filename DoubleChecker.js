@@ -8,6 +8,7 @@
     let predicts = [];
     let pastRolls = [];
     let predictsBox;
+
     function processRecord(record) {
         const id = record.id;
         const color = record.color;
@@ -31,6 +32,7 @@
         }
         return { id, cor, roll, hora, minuto, horaMinuto };
     }
+
     function fetchRouletteHistory() {
         return new Promise((resolve, reject) => {
             // Calculate the endDate as "now" in UTC
@@ -66,11 +68,13 @@
             xhr.send();
         });
     }
+
     function getNewRolls(fetchedRolls) {
         const existingIds = new Set(pastRolls.map(roll => roll.id));
         const newRolls = fetchedRolls.filter(roll => !existingIds.has(roll.id));
         return newRolls;
     }
+
     function updatePredictsBox() {
         predicts.sort((a, b) => a.predictTime - b.predictTime);
         if (predicts.length >= 23) {
@@ -99,6 +103,7 @@
         });
         predictsBox.scrollTop = predictsBox.scrollHeight;
     }
+
     async function processCurrentRoll(currentRoll) {
         let predictColor;
         let predictTime;
@@ -112,22 +117,19 @@
         } else if (minB == null) {
             if (
                 (firstA.cor == "🔴" && currentRoll.cor == "🔴" && firstA.hora == currentRoll.hora && firstA.minuto == currentRoll.minuto)
-
             ) {
                 minA = firstA;
                 minB = currentRoll;
                 predictTime = new Date(minB.horaMinuto);
                 predictTime.setUTCMinutes(predictTime.getUTCMinutes() + firstA.roll + currentRoll.roll + currentRoll.minuto);
-
             } else if (firstA.cor == "⚫" && currentRoll.cor == "⚫" && firstA.hora == currentRoll.hora && firstA.minuto != currentRoll.minuto) {
                 minA = firstA;
                 minB = currentRoll;
                 let maiorMinuto = Math.max(firstA.minuto, currentRoll.minuto);
-                let maiorRoll = Math.max(firstA.roll, currentRoll.roll); // Verifique se deve ser currentRoll.roll
-                let menorRoll = Math.min(firstA.roll, currentRoll.roll); // Corrigido de firstB.roll para currentRoll.roll
+                let maiorRoll = Math.max(firstA.roll, currentRoll.roll);
+                let menorRoll = Math.min(firstA.roll, currentRoll.roll);
                 predictTime = new Date(firstA.horaMinuto);
-                predictTime.setUTCMinutes((maiorRoll - menorRoll) + currentRoll.minuto);      
-
+                predictTime.setUTCMinutes((maiorRoll - menorRoll) + maiorMinuto);
             } else {
                 firstA = currentRoll;
             }
@@ -137,7 +139,6 @@
             switch (colorCombo) {
                 case "🔴-🔴":
                     predictColor = "🔴⚪";
-
                     break;
                 case "⚫-⚫":
                     predictColor = "⚫⚪";
@@ -182,6 +183,7 @@
             }
         }
     }
+
     function checkPredictions(currentRoll) {
         for (let predict of predicts) {
             if (predict.winLoss == "") {
