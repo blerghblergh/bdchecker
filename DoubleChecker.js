@@ -122,11 +122,11 @@
             } else if (firstA.cor == "⚫" && currentRoll.cor == "⚫" && firstA.hora == currentRoll.hora && firstA.minuto != currentRoll.minuto) {
                 minA = firstA;
                 minB = currentRoll;
-                maiorMinuto = Math.max(firstA.minuto, currentRoll.minuto);
-                maiorRoll = Math.max(firstA.roll, currentRoll.minuto);
-                menorRoll = Math.min(firstA.roll, firstB.roll)
-                predictTime = new Date(currentRoll.horaMinuto);
-                predictTime.setUTCMinutes((maiorRoll - menorRoll) + currentRoll.minuto);
+                let maiorMinuto = Math.max(firstA.minuto, currentRoll.minuto);
+                let maiorRoll = Math.max(firstA.roll, currentRoll.roll); // Verifique se deve ser currentRoll.roll
+                let menorRoll = Math.min(firstA.roll, currentRoll.roll); // Corrigido de firstB.roll para currentRoll.roll
+                predictTime = new Date(firstA.horaMinuto);
+                predictTime.setUTCMinutes((maiorRoll - menorRoll) + currentRoll.minuto);      
 
             } else {
                 firstA = currentRoll;
