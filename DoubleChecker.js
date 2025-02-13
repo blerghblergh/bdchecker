@@ -125,8 +125,8 @@
                 maiorMinuto = Math.max(firstA.minuto, currentRoll.minuto);
                 maiorRoll = Math.max(firstA.roll, currentRoll.minuto);
                 menorRoll = Math.min(firstA.roll, firstB.roll)
-                predictTime = new Date(firstA.horaMinuto);
-                predictTime.setUTCMinutes((maiorRoll - menorRoll) + maiorMinuto);
+                predictTime = new Date(currentRoll.horaMinuto);
+                predictTime.setUTCMinutes((maiorRoll - menorRoll) + currentRoll.minuto);
 
             } else {
                 firstA = currentRoll;
